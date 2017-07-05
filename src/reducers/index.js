@@ -11,8 +11,9 @@ export const products = (state = INITIAL_STATE.products, { type, payload }) => {
   debugger;
   switch (type) {
     case ACTION_TYPES.addProduct:
-      debugger;
       return [...state, payload.product];
+    case ACTION_TYPES.removeProduct:
+      return [...state.filter( prod => prod.name !== payload.product.name)]  
   }
 
   return state;
