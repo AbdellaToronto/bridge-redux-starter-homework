@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import './App.css';
 import { connect } from 'react-redux';
-import { addProduct } from './actions';
+import { addProduct, removeProduct, updateProductsList } from './actions';
 import Chance from 'chance';
 export const chance = Chance();
 
@@ -22,14 +22,45 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = {
   add: addProduct,
+  remove : removeProduct,
+  update : updateProductsList
 };
 
-const Product = (props) => <div>{props.name}</div>;
+const Product = (props) => <div><RemoveButton name={props.name} {...props}/> {props.name}</div>;
 
 const DaBest = ({name}) => <h1>The Best: {name}</h1>;
 
-const AdderButton = ({add}) => <button onClick={ () => add({ name: 'Sofa' }) }>Add Sofa</button>
+const AdderButton = ({add}) => <button onClick={ () => add({ name: 'Sofa' }) }>Add Sofa</button>;
 
+// const RemoveButton = ({remove, name}) => <button onClick={ () => remove({ name: 'Sofa' }) }>remove item</button>
+
+const RemoveButton = ({name, remove}) => <button onClick={ () => remove({ name }) }>remove item</button>;
+
+const SearchBar = ({ update }) => <input type="text" placeholder="search" onChange={ evt => update({ searchValue: evt.target.value }) }/>;
+
+const AdderProduct = ({add}) => {
+  let productName = '';
+  let productDepartment = '';
+  let productPrice = '';
+  let productStock = 0;
+  return (
+    <div>
+      <input className="productNameInput" type="text" placeholder="Enter the product name" onChange={ (evt) => productName = evt.target.value}></input>
+      <input type="text" placeholder="Enter the product department" onChange={ (evt) => productDepartment= evt.target.value}></input>
+      <input type="text" placeholder="Enter the product price" onChange={ (evt) => productPrice= evt.target.value}></input>
+      <input type="text" placeholder="Enter the product stock" onChange={ (evt) => productStock= Number(evt.target.value)}></input>
+      <button type="submit" onClick={ () => {
+          if(productName !== "") {
+            return add({ name: productName, department: productDepartment, price: productPrice, stock: productStock })
+          }
+          
+          {/*document.querySelector('.productNameInput').value('');*/}
+       } }>Add item</button>
+    </div>
+    );
+  };
+
+// const CreateNewItem = 
 class App extends Component {
 
 
@@ -49,13 +80,13 @@ class App extends Component {
 
   render() {
     const { products, add, whoIsTheBest } = this.props;
-    debugger;
     return (
       <div>
+        <SearchBar { ...this.props }/>
         <DaBest name={whoIsTheBest} />
-        {products.map(product => <Product name={product.name} key={product.id} />)}
+        {products.map(product => <Product name={product.name} key={product.id} { ...this.props }/>)}
 
-        <AdderButton { ...this.props } />
+        <AdderProduct { ...this.props }/>
       </div>
     );
   }
