@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import './App.css';
 import { connect } from 'react-redux';
-import { addProduct } from './actions';
+import { addProduct, removeProduct , typeName, typeDepartment, typePrice, typeSearch } from './actions';
 import Chance from 'chance';
 export const chance = Chance();
 
@@ -15,20 +15,40 @@ export const chance = Chance();
 
 const mapStateToProps = state => {
   return ({
-  products: state.products,
-  whoIsTheBest: 'Yihua',
-  lowStockProducts: state.products.filter(prod => prod.stock && prod.stock < 4),
+  products: state.products.filter(product => `${product.name} ${product.department}`.toLowerCase().includes(state.searchInput) ) ,
+  productsForm: state.productsForm,
+  searchInput: state.searchInput,
 })};
 
 const mapDispatchToProps = {
   add: addProduct,
+  remove: removeProduct,
+  nameChange: typeName,
+  departmentChange: typeDepartment,
+  priceChange: typePrice,
+  searchChange: typeSearch, 
 };
 
-const Product = (props) => <div>{props.name}</div>;
+const Product = (props) => <div>{props.name} {props.price} {props.department} <RemoveButton {...props} /> </div>;
 
-const DaBest = ({name}) => <h1>The Best: {name}</h1>;
+const AdderButton = ({add, productsForm}) => <button onClick={ () => { add(productsForm)} }>Add Product</button>;
 
-const AdderButton = ({add}) => <button onClick={ () => add({ name: 'Sofa' }) }>Add Sofa</button>
+const RemoveButton = ({remove, id}) => <button onClick={ () => { remove(id) }} > remove this item </button>;
+
+const ProductInput = ({inputFunc, fieldType, val}) => <div><h1>{fieldType}</h1><input value={val} onChange={(e) => { inputFunc(e.target.value)} } /></div>;
+
+const ProductForm = (props) => (
+  <div>
+  <ProductInput inputFunc={props.nameChange} fieldType="Name" val={props.productsForm.name} />
+  <ProductInput inputFunc={props.departmentChange} fieldType="Department" val={props.productsForm.department} />
+  <ProductInput inputFunc={props.priceChange} fieldType="Price" val={props.productsForm.price} />
+  <AdderButton {...props}/>
+  </div>
+);
+
+const SearchInput = (props) => (
+  <ProductInput inputFunc={props.searchChange} fieldType="Search" val={props.searchInput} />
+);
 
 class App extends Component {
 
@@ -48,14 +68,13 @@ class App extends Component {
   }
 
   render() {
-    const { products, add, whoIsTheBest } = this.props;
-    debugger;
+    const { products } = this.props;
     return (
       <div>
-        <DaBest name={whoIsTheBest} />
-        {products.map(product => <Product name={product.name} key={product.id} />)}
-
-        <AdderButton { ...this.props } />
+        <SearchInput {...this.props} />
+        {products.map(product => <Product name={product.name} id={product.id} key={product.id} price={product.price} department={product.department} {...this.props}/>)}
+        <h1>test form</h1>
+        <ProductForm {...this.props} />
       </div>
     );
   }
