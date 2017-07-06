@@ -25,14 +25,17 @@ const mapDispatchToProps = {
   remove : removeProduct
 };
 
-const Product = (props) => <div>{props.name}</div>;
+const Product = (props) => <div><RemoveButton name={props.name} {...props}/> {props.name}</div>;
 
 const DaBest = ({name}) => <h1>The Best: {name}</h1>;
 
 const AdderButton = ({add}) => <button onClick={ () => add({ name: 'Sofa' }) }>Add Sofa</button>;
 
-const RemoveButton = ({remove}) => <button onClick={ () => remove({ name: 'Sofa' }) }>remove Sofa</button>
+// const RemoveButton = ({remove, name}) => <button onClick={ () => remove({ name: 'Sofa' }) }>remove item</button>
 
+const RemoveButton = ({name, remove}) => <button onClick={ () => remove({ name }) }>remove item</button>
+
+// const CreateNewItem = 
 class App extends Component {
 
 
@@ -56,10 +59,9 @@ class App extends Component {
     return (
       <div>
         <DaBest name={whoIsTheBest} />
-        {products.map(product => <Product name={product.name} key={product.id} />)}
+        {products.map(product => <Product name={product.name} key={product.id} { ...this.props }/>)}
 
         <AdderButton { ...this.props } />
-        <RemoveButton { ...this.props } />
       </div>
     );
   }
