@@ -11,3 +11,14 @@ export function generateProducts(numberOfProducts) {
     type: chance.word(),
   }));
 }
+
+export function generateBlankProduct() {
+  return {
+    id: '',
+    name: '',
+    department: '',
+    price: '',
+    stock: 0,
+    type: '',    
+  }
+}
