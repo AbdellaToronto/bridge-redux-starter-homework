@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import './App.css';
 import { connect } from 'react-redux';
 import { addProduct, removeProduct } from './actions';
+import Searchbar from './components/Searchbar';
 import Chance from 'chance';
 export const chance = Chance();
 
@@ -45,13 +46,14 @@ class App extends Component {
   }
 
   componentDidMount() {
+    /*
     this.props.add({
       id: chance.guid(),
       name: 'Table',
       department: 'Furniture',
       price: '300.00',
       stock: 5,
-    });
+    }); */
   }
 
   render() {
@@ -59,6 +61,7 @@ class App extends Component {
     //debugger;
     return (
       <div>
+        <Searchbar />
         {products.map(product => {
           return([
             <li>
