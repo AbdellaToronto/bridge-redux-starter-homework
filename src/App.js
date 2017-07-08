@@ -13,41 +13,55 @@ export const chance = Chance();
  *            hint: it would help if you updated the global state with every keystroke!
   * */
 
+  /* 
+
+  homework solution questions:
+
+    - went back on forth on whether to split out reducers into separate files (there are
+    only 3 and they aren't too long but seems like it may be useful for clarity if
+    revisiting later... advise?)
+
+    - also wondering the same for components: should they only be split out if there is starting
+    to be too much code on main file or is it good practice to split out regardless of length?
+
+  */ 
+
 const mapStateToProps = state => {
   return ({
-  products: state.products.filter(product => `${product.name} ${product.department}`.toLowerCase().includes(state.searchInput) ) ,
-  productsForm: state.productsForm,
-  searchInput: state.searchInput,
-})};
+    products: state.products.filter(product => `${product.name} ${product.department}`.toLowerCase().includes(state.searchInput.toLowerCase()) ) ,
+    productsForm: state.productsForm,
+    searchInput: state.searchInput,
+  })
+};
 
 const mapDispatchToProps = {
   add: addProduct,
   remove: removeProduct,
-  nameChange: typeName,
-  departmentChange: typeDepartment,
-  priceChange: typePrice,
-  searchChange: typeSearch, 
+  typeName,
+  typeDepartment,
+  typePrice,
+  typeSearch, 
 };
 
-const Product = (props) => <div>{props.name} {props.price} {props.department} <RemoveButton {...props} /> </div>;
+const Product = (props) => <div className="single-product"><h4>{props.name}</h4> <h3>{props.price}</h3> <h6>{props.department}</h6> <RemoveButton {...props} /> </div>;
 
-const AdderButton = ({add, productsForm}) => <button onClick={ () => { add(productsForm)} }>Add Product</button>;
+const AdderButton = ({add, productsForm}) => <button onClick={ () => { add({...productsForm, id: chance.guid()})} }>Add Product</button>;
 
-const RemoveButton = ({remove, id}) => <button onClick={ () => { remove(id) }} > remove this item </button>;
+const RemoveButton = ({remove, id}) => <button onClick={ () => { remove(id) }} >remove</button>;
 
-const ProductInput = ({inputFunc, fieldType, val}) => <div><h1>{fieldType}</h1><input value={val} onChange={(e) => { inputFunc(e.target.value)} } /></div>;
+const InputField = ({inputFunc, fieldType, val, className}) => <div className={className}><h3>{fieldType}</h3><input value={val} onChange={(e) => { inputFunc(e.target.value)} } /></div>;
 
 const ProductForm = (props) => (
-  <div>
-  <ProductInput inputFunc={props.nameChange} fieldType="Name" val={props.productsForm.name} />
-  <ProductInput inputFunc={props.departmentChange} fieldType="Department" val={props.productsForm.department} />
-  <ProductInput inputFunc={props.priceChange} fieldType="Price" val={props.productsForm.price} />
+  <div className="product-form">
+  <InputField inputFunc={props.typeName} fieldType="Name" val={props.productsForm.name} />
+  <InputField inputFunc={props.typeDepartment} fieldType="Department" val={props.productsForm.department} />
+  <InputField inputFunc={props.typePrice} fieldType="Price" val={props.productsForm.price} />
   <AdderButton {...props}/>
   </div>
 );
 
 const SearchInput = (props) => (
-  <ProductInput inputFunc={props.searchChange} fieldType="Search" val={props.searchInput} />
+  <InputField className="search-box" inputFunc={props.typeSearch} fieldType="Search by name and department" val={props.searchInput} />
 );
 
 class App extends Component {
@@ -58,13 +72,7 @@ class App extends Component {
   }
 
   componentDidMount() {
-    this.props.add({
-      id: chance.guid(),
-      name: 'Table',
-      department: 'Furniture',
-      price: '300.00',
-      stock: 5,
-    });
+
   }
 
   render() {
@@ -72,9 +80,9 @@ class App extends Component {
     return (
       <div>
         <SearchInput {...this.props} />
-        {products.map(product => <Product name={product.name} id={product.id} key={product.id} price={product.price} department={product.department} {...this.props}/>)}
-        <h1>test form</h1>
         <ProductForm {...this.props} />
+        {products.map(product => <Product name={product.name} id={product.id} key={product.id} price={product.price} department={product.department} {...this.props}/>)}
+
       </div>
     );
   }

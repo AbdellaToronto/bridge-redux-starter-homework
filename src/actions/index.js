@@ -1,15 +1,8 @@
-export const ACTION_TYPES = {
-  addProduct: 'ADD_PRODUCT',
-  removeProduct: 'REMOVE_PRODUCT',
-  typeName: 'TYPE_NAME',
-  typeDepartment: 'TYPE_DEPARTMENT',
-  typePrice: 'TYPE_PRICE',
-  typeSearch: 'TYPE_SEARCH',
-};
+import { ACTION_TYPES } from '../constants/ActionTypes';
 
 export function addProduct(product) {
   return {
-    type: ACTION_TYPES.addProduct,
+    type: ACTION_TYPES.ADD_PRODUCT,
     payload: {
       product,
     }
@@ -18,7 +11,7 @@ export function addProduct(product) {
 
 export function removeProduct(id) {
   return {
-    type: ACTION_TYPES.removeProduct,
+    type: ACTION_TYPES.REMOVE_PRODUCT,
     payload: {
       id,
     }
@@ -27,7 +20,7 @@ export function removeProduct(id) {
 
 export function typeName(name) {
   return {
-    type: ACTION_TYPES.typeName,
+    type: ACTION_TYPES.TYPE_NAME,
     payload: {
       name,
     }
@@ -36,7 +29,7 @@ export function typeName(name) {
 
 export function typeDepartment(department) {
   return {
-    type: ACTION_TYPES.typeDepartment,
+    type: ACTION_TYPES.TYPE_DEPARTMENT,
     payload: {
       department,
     }
@@ -45,7 +38,7 @@ export function typeDepartment(department) {
 
 export function typePrice(price) {
   return {
-    type: ACTION_TYPES.typePrice,
+    type: ACTION_TYPES.TYPE_PRICE,
     payload: {
       price,
     }
@@ -54,7 +47,7 @@ export function typePrice(price) {
 
 export function typeSearch(string) {
   return {
-    type: ACTION_TYPES.typeSearch,
+    type: ACTION_TYPES.TYPE_SEARCH,
     payload: {
       string,
     }

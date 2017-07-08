@@ -14,7 +14,7 @@ export function generateProducts(numberOfProducts) {
 
 export function generateBlankProduct() {
   return {
-    id: chance.guid(),
+    id: '',
     name: '',
     department: '',
     price: '',

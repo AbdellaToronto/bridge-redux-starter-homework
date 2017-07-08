@@ -1,7 +1,6 @@
 import { combineReducers } from 'redux';
-
 import { generateProducts , generateBlankProduct } from '../utils/data';
-import { ACTION_TYPES } from '../actions';
+import { ACTION_TYPES } from '../constants/ActionTypes';
 
 const INITIAL_STATE = {
   products: generateProducts(10),
@@ -11,9 +10,9 @@ const INITIAL_STATE = {
 
 export const products = (state = INITIAL_STATE.products, { type, payload }) => {
   switch (type) {
-    case ACTION_TYPES.addProduct:
+    case ACTION_TYPES.ADD_PRODUCT:
       return [...state, payload.product];
-    case ACTION_TYPES.removeProduct:
+    case ACTION_TYPES.REMOVE_PRODUCT:
       return [...state].filter(product => product.id !== payload.id);
   }
   return state;
@@ -21,13 +20,13 @@ export const products = (state = INITIAL_STATE.products, { type, payload }) => {
 
 export const productsForm = (state = INITIAL_STATE.productsForm, { type, payload }) => {
   switch (type) {
-      case ACTION_TYPES.typeName:
+      case ACTION_TYPES.TYPE_NAME:
         return {...state, name: payload.name};
-      case ACTION_TYPES.typeDepartment:
+      case ACTION_TYPES.TYPE_DEPARTMENT:
         return {...state, department: payload.department};
-      case ACTION_TYPES.typePrice:
+      case ACTION_TYPES.TYPE_PRICE:
         return {...state, price: payload.price};
-      case ACTION_TYPES.addProduct:
+      case ACTION_TYPES.ADD_PRODUCT:
         return INITIAL_STATE.productsForm;
       default:
         return state;
@@ -36,8 +35,7 @@ export const productsForm = (state = INITIAL_STATE.productsForm, { type, payload
 
 export const searchInput = (state = INITIAL_STATE.searchInput, { type, payload }) => {
   switch (type) {
-    case ACTION_TYPES.typeSearch:
-      console.log(payload.string);
+    case ACTION_TYPES.TYPE_SEARCH:
       return payload.string;
     default:
       return state;

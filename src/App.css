@@ -22,3 +22,45 @@
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
 }
+
+.single-product{
+  display:inline-block;
+  text-align:center;
+  background-color:#eee;
+  margin:1em;
+  padding:1em;
+}
+
+.search-box{
+  width:100%;
+  text-align:left;
+}
+
+.search-box h3 {
+  display:inline-block;
+  margin:1em;
+}
+
+.product-form {
+  border:5px solid #000;
+  padding:2em;
+  margin:1em;
+  text-align:center;
+  float:right;
+}
+
+.single-product button, .product-form button{
+  background-color:#000;
+  color:#fff;
+  border:0;
+}
+
+.single-product button {
+  font-size:0.5em;
+}
+
+.product-form button {
+  margin-top:2em;
+  font-size:1.2em;
+  padding:0.6em;
+}
