@@ -1,14 +1,14 @@
-//add to index reducer and put in combineReducers
 
-import { ACTION_TYPES } from '../actions/search.js';
+import { SEARCH_ACTION_TYPES } from '../actions/search.js';
 
-export const search = (state = '', {type, payload}) => {
+
+export const textInput = (state = '', {type, payload}) => {
   switch(type) {
-    case ACTION_TYPES.searchProducts:
-      return state.filter(product => (product.name).includes(payload.value));
+    case SEARCH_ACTION_TYPES.inputChange:
+      return payload.value;
+
     default:
       return state;
   }
-
 
 }
