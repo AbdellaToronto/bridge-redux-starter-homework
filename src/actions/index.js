@@ -1,11 +1,14 @@
+import { SEARCH_ACTION_TYPES } from './search.js';
+
 export const ACTION_TYPES = {
   addProduct: 'ADD_PRODUCTS',
   removeProduct: 'REMOVE_PRODUCT',
+  inputChange: 'INPUT_CHANGE'
 };
 
 
 export function addProduct(product) {
-  //debugger;
+
   return {
     type: ACTION_TYPES.addProduct,
     payload: {
@@ -15,7 +18,7 @@ export function addProduct(product) {
 }
 
 export function removeProduct(productID) {
-  //debugger;
+
   return {
     type: ACTION_TYPES.removeProduct,
     payload: {
@@ -23,3 +26,5 @@ export function removeProduct(productID) {
     }
   }
 }
+
+export const inputChange = SEARCH_ACTION_TYPES.inputChange;
