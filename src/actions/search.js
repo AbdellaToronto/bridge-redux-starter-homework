@@ -1,12 +1,12 @@
-export const ACTION_TYPES = {
-  searchProduct: 'SEARCH_PRODUCTS',
+export const SEARCH_ACTION_TYPES = {
+  inputChange: 'INPUT_CHANGE',
 };
 
 
-export default function searchProducts(value) {
-  //debugger;
+export function inputChange(value) {
+
   return {
-    type: ACTION_TYPES.searchProducts,
+    type: SEARCH_ACTION_TYPES.inputChange,
     payload: {
       value,
     }
