@@ -5,6 +5,7 @@ import { addProduct, removeProduct } from './actions';
 import Searchbar from './components/Searchbar';
 import Chance from 'chance';
 export const chance = Chance();
+//so we import actions but not reducers?
 
 /* TODO: HOMEWORK!!!!!
  *
@@ -17,6 +18,7 @@ export const chance = Chance();
 const mapStateToProps = state => {
   return ({
   products: state.products,
+  visibleProducts: state.visibleProducts,
   //lowStockProducts: state.products.filter(prod => prod.stock && prod.stock < 4),
 })};
 
@@ -29,7 +31,7 @@ const Product = (props) => <div>{props.name}</div>;
 
 //but, the point of Redux is I should not be passing props down from Product to RemoveButton
 
-//why does this work with add sofa, when it has no id? Probably it shouldn't work
+//why does this work with add sofa, when sofa has no id? Probably it shouldn't work
 const RemoveButton = ({remove, id}) => <button onClick={ () => remove(id) }>Remove item</button>
 
 
@@ -57,11 +59,12 @@ class App extends Component {
   }
 
   render() {
-    const { products, add, remove } = this.props;
-    //debugger;
+    const { products, visibleProducts, add, remove } = this.props;
+    {/*debugger;*/}
     return (
       <div>
         <Searchbar />
+        {/*replace products with visibleProducts*/}
         {products.map(product => {
           return([
             <li>
