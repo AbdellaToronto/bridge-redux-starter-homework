@@ -30,5 +30,6 @@
 }
 
 .product-wrapper {
-  width:800px;
+  width:70%;
+  margin: 0 auto;
 }
