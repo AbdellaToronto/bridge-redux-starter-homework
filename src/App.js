@@ -72,14 +72,12 @@ const InputFields = ({textInput, onInputChange, add}) => (
         </button>
     </div>);
 
-const AdderButton = ({add}) => <button onClick={ () => add({ name: 'Sofa', department: 'Sofa', stock: '10', price: '$500', id: chance.guid() }) }>Add Sofa</button>;
-
 const RemoveButton = ({remove, id}) => <button onClick={ () => remove({id})}>Remove</button>;
 
 const Search = ({searchInput, onSearchProducts}) =>
     (<div>
         <input
-            placeholder="Search"
+            placeholder="Search by product name"
             value={searchInput}
             name="search"
             onChange={ev => onSearchProducts(ev.target.value)}
@@ -104,7 +102,6 @@ class App extends Component {
                      price={product.price}
                      stock={product.stock}
                      {...this.props} />)}
-          <AdderButton {...this.props} />
           <InputFields {...this.props} />
           <Search {...this.props} />
       </div>

@@ -19,7 +19,7 @@ export const products = (state = INITIAL_STATE.products, { type, payload }) => {
       case ACTION_TYPES.addProduct:
           return [...state, payload.product];
       case ACTION_TYPES.removeProduct:
-          return [...state].filter(element => {
+          return state.filter(element => {
               return element.id !== payload.id
           });
       default:
