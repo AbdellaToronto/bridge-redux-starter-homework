@@ -22,3 +22,14 @@
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
 }
+
+.product {
+  display:inline-block;
+  margin:10px;
+  width:200px;
+}
+
+.product-wrapper {
+  width:70%;
+  margin: 0 auto;
+}
