@@ -1,13 +1,24 @@
+
 export const ACTION_TYPES = {
-  addProduct: 'ADD_PRODUCTS',
+  ADD_NEW_PRODUCT: 'ADD_NEW_PRODUCT',
+  REMOVE_PRODUCT: 'REMOVE_PRODUCT',
 };
 
-export function addProduct(product) {
-  debugger;
+
+export function addProductToInventory(values) {
   return {
-    type: ACTION_TYPES.addProduct,
+    type: ACTION_TYPES.ADD_NEW_PRODUCT,
     payload: {
-      product,
+      values,
+    }
+  }
+}
+
+export function removeProduct(productID) {
+  return {
+    type: ACTION_TYPES.REMOVE_PRODUCT,
+    payload: {
+      productID,
     }
   }
 }

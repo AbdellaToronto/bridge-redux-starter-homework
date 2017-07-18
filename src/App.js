@@ -1,64 +1,67 @@
+
 import React, { Component } from 'react';
 import './App.css';
 import { connect } from 'react-redux';
-import { addProduct } from './actions';
+import { addProductToInventory, removeProduct } from './actions';
+
+import Searchbar from './components/searchbar';
+import NewProductForm from './components/newproductform';
 import Chance from 'chance';
 export const chance = Chance();
+
 
 /* TODO: HOMEWORK!!!!!
  *
  * 1. Create the action to remove a product, and update the state to remove a product by id
  * 2. OPTIONAL: Create a more flexible product making form that will allow you to make a product with all field data, show this data too
  * 3. OPTIONAL: Create a filter search bar that allows you to shrink the list of products by whats typed!
- *            hint: it would help if you updated the global state with every keystroke!
-  * */
+ * hint: it would help if you updated the global state with every keystroke!*
+ */
 
-const mapStateToProps = state => {
-  return ({
-  products: state.products,
-  whoIsTheBest: 'Yihua',
-  lowStockProducts: state.products.filter(prod => prod.stock && prod.stock < 4),
-})};
 
-const mapDispatchToProps = {
-  add: addProduct,
-};
+const RemoveButton = ({remove, id}) => <button onClick={ () => remove(id) }>Remove item</button>
 
-const Product = (props) => <div>{props.name}</div>;
 
-const DaBest = ({name}) => <h1>The Best: {name}</h1>;
-
-const AdderButton = ({add}) => <button onClick={ () => add({ name: 'Sofa' }) }>Add Sofa</button>
 
 class App extends Component {
 
 
-  constructor(props){
-    super(props);
-  }
-
-  componentDidMount() {
-    this.props.add({
-      id: chance.guid(),
-      name: 'Table',
-      department: 'Furniture',
-      price: '300.00',
-      stock: 5,
-    });
-  }
-
   render() {
-    const { products, add, whoIsTheBest } = this.props;
-    debugger;
+    const { products, newProductForm, visibleProducts, add, remove } = this.props;
+    const handleSearchSubmit = e => {
+      e.preventDefault();
+      return add(newProductForm.values)
+    };
+
     return (
       <div>
-        <DaBest name={whoIsTheBest} />
-        {products.map(product => <Product name={product.name} key={product.id} />)}
+        <Searchbar />
 
-        <AdderButton { ...this.props } />
+        {visibleProducts.map(product => {
+          return([
+            <li key={product.id}>
+              {product.name}
+              <RemoveButton remove={remove} id={product.id} />
+            </li>
+          ])
+        })}
+
+        <NewProductForm onSubmit={ handleSearchSubmit } />
       </div>
+
     );
   }
 }
+
+const mapStateToProps = state => ({
+  products: state.products,
+  visibleProducts: state.products.filter(prod => prod.name.includes(state.textInput)),
+  newProductForm: state.form.new_product
+});
+
+const mapDispatchToProps = {
+  add: addProductToInventory,
+  remove: removeProduct,
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);
