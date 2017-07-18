@@ -1,30 +1,24 @@
-import { SEARCH_ACTION_TYPES } from './search.js';
 
 export const ACTION_TYPES = {
-  addProduct: 'ADD_PRODUCTS',
-  removeProduct: 'REMOVE_PRODUCT',
-  inputChange: 'INPUT_CHANGE'
+  ADD_NEW_PRODUCT: 'ADD_NEW_PRODUCT',
+  REMOVE_PRODUCT: 'REMOVE_PRODUCT',
 };
 
 
-export function addProduct(product) {
-
+export function addProductToInventory(values) {
   return {
-    type: ACTION_TYPES.addProduct,
+    type: ACTION_TYPES.ADD_NEW_PRODUCT,
     payload: {
-      product,
+      values,
     }
   }
 }
 
 export function removeProduct(productID) {
-
   return {
-    type: ACTION_TYPES.removeProduct,
+    type: ACTION_TYPES.REMOVE_PRODUCT,
     payload: {
       productID,
     }
   }
 }
-
-export const inputChange = SEARCH_ACTION_TYPES.inputChange;
