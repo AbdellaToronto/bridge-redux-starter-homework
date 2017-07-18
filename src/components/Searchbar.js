@@ -3,15 +3,6 @@ import { inputChange } from '../actions/search.js';
 import { connect } from 'react-redux';
 
 
-const mapStateToProps = state => ({
-  textInput: state.textInput,
-});
-
-//shouldn't this be a function?
-const mapDispatchToProps = {
-  onTextInputChange: inputChange,
-};
-
 
 const Searchbar = ({textInput, onTextInputChange}) => (
   <div>
@@ -25,4 +16,14 @@ const Searchbar = ({textInput, onTextInputChange}) => (
   </div>
 )
 
-export default connect(mapStateToProps, mapDispatchToProps)(Searchbar);
+
+const mapStateToProps = state => ({
+  textInput: state.textInput,
+});
+
+
+const actions = {
+  onTextInputChange: inputChange,
+};
+
+export default connect(mapStateToProps, actions)(Searchbar);
